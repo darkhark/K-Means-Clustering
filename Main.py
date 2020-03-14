@@ -1,113 +1,37 @@
-import os
-import subprocess
-import time
-import numpy as np
-import matplotlib.pyplot as plt
-
-print("Running Kmeans using Euclidean Distance")
-print("=======================================")
-subprocess.call(" python Kmeans_Euclidean.py 1", shell=True)
-print("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
-time.sleep(1) # Delay for 5 seconds
-print("Running Kmeans using Jaccard Distance")
-print("=======================================")
-subprocess.call(" python Kmeans_Jaccard.py 1", shell=True)
-print("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
-time.sleep(1)
-print("Running Kmeans using Cosine Distance")
-print("=======================================")
-subprocess.call(" python Kmeans_Cosine.py 1", shell=True)
-subprocess.call(" python k-means_Cosine.py 1", shell=True)
-print("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
-import csv
-##---VISUALIZATION---##
-
-with open('Kmeans_cosine_SSE.csv') as f1:
-    r=csv.reader(f1,delimiter=',')
-    a=0
-    for row in r:
-        a1=row
-    for x in a1:
-        a+=float(x)
-# print(a)
-
-with open('Kmeans_Jaccard_SSE.csv') as f1:
-    r=csv.reader(f1,delimiter=',')
-    b=0
-    for row in r:
-        a1=row
-    for x in a1:
-        b+=float(x)
-# print(b)
-
-with open('Kmeans_Euclidean_SSE.csv') as f1:
-    r=csv.reader(f1,delimiter=',')
-    c=0
-    for row in r:
-        a1=row
-    for x in a1:
-        c+=float(x)
-# print(c)
+import HW06 as hw
 
 
-import numpy as np
-import matplotlib.pylab as plt
-import csv
-with open('Kmeans_cosine_SSE.csv') as f1:
-    r=csv.reader(f1,delimiter=',')
-    a=0
-    for row in r:
-        a1=row
-    for x in a1:
-        a+=float(x)
-# print(a)
+def printSSE(i):
+    print("Sum of Squared Error is: "+str(i))
 
-with open('Kmeans_Jaccard_SSE.csv') as f1:
-    r=csv.reader(f1,delimiter=',')
-    b=0
-    for row in r:
-        a1=row
-    for x in a1:
-        b+=float(x)
-# print(b)
+# iris = datasets.load_iris()
+# data = pd.DataFrame(preprocessing.normalize(iris.data), columns=iris.feature_names)
+# need to normalize all columns except target so we can figure out what it is at the end
+# data = pd.DataFrame(iris.data, columns = iris.feature_names)
+# data = preprocessing.normalize(data.iloc[:,:-1])
+# data['target'] = pd.Series(iris.target)
+# cols = list(data)
+# cols.insert(0, cols.pop(cols.index('target')))
+# data = data.loc[:, cols]
+# dataset = data.values.tolist()
 
-with open('Kmeans_Euclidean_SSE.csv') as f1:
-    r=csv.reader(f1,delimiter=',')
-    c=0
-    for row in r:
-        a1=row
-    for x in a1:
-        c+=float(x)
-# print(c)
 
-with open('Kmeans_SSE.csv') as f1:
-    r=csv.reader(f1,delimiter=',')
-    d=0
-    for row in r:
-        a1=row
-    for x in a1:
-        d+=float(x)
-# print(d)
-l=[]
-l.append(a)
-l.append(b)
-l.append(c)
-l.append(d)
+def question(centroids, dataset, similarity):
+    hw.showDataset2D(dataset)
+    clustering = hw.kmeans(dataset, 2, True, centroids, similarity=similarity)
+    print("-------------------------------------------")
+    printSSE(clustering["withinss"])
+    hw.printTable(clustering["centroids"])
+    print("-------------------------------------------")
 
-# l=list(a,b,c,d)
 
-objects = ("Cosine","Jaccard","Euclidean","K-means")#(1,2,3,4)
-y_pos = np.arange(len(objects))
+# similarity: 0 = Euclidean, 1 = Cosine, 2 = Manhattan, 3 = Jaccard
+# Question 1.1
+data = hw.loadCSV('footballData.csv')
+centroidPoints = [[0, 4, 6], [0, 5, 4]]
+print("Manhattan")
+question(centroidPoints, data, 2)
 
-width = 0.35
-plt.bar(y_pos, l, width, align='center', color='b')
-plt.xticks(y_pos, objects)
-plt.ylabel('Withinss(Scale Normalized)')
-plt.xlabel('Distance Metric')
-plt.title('Sum of Square Error K-means Clustering Algorithm V/s Distance Metric')
-
-plt.show()
-
-os.remove('Kmeans_cosine_SSE.csv')
-os.remove('Kmeans_Euclidean_SSE.csv')
-os.remove('Kmeans_Jaccard_SSE.csv')
+# Question 1.2
+print("Euclidean")
+question(centroidPoints, data, 0)
