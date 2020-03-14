@@ -206,7 +206,7 @@ def computeWithinss(clusters, centroids, similarity):
         centroid = centroids[i]
         cluster = clusters[i]
         for instance in cluster:
-            result += distance(centroid, instance, similarity)
+            result += distance(centroid, instance, similarity) ** 2
     return result
 
 

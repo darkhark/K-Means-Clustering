@@ -35,3 +35,13 @@ question(centroidPoints, data, 2)
 # Question 1.2
 print("Euclidean")
 question(centroidPoints, data, 0)
+
+# Question 1.3
+print("Manhattan")
+centroidPoints = [[0, 3, 3], [0, 8, 3]]
+question(centroidPoints, data, 2)
+
+# Question 1.4
+print("Manhattan")
+centroidPoints = [[0, 3, 2], [0, 4, 8]]
+question(centroidPoints, data, 2)
