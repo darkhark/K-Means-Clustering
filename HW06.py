@@ -165,7 +165,6 @@ def kmeans(instances, k, animation=False, initCentroids=None, similarity=0):
     """
     result = {}
     if initCentroids is None or len(initCentroids) < k:
-        print("In first if")
         # randomly select k initial centroids
         random.seed(time.time())
         centroids = random.sample(instances, k)

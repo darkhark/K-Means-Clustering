@@ -96,7 +96,7 @@ import numpy as np
 
 def jdistance(a, b):
     c = set(a).intersection(set(b))
-    return (1 - float(len(c)) / (len(a) + len(b) - len(c)))
+    return 1 - float(len(c)) / (len(a) + len(b) - len(c))
 
 
 def meanInstance(name, instanceList):

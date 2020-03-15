@@ -90,7 +90,10 @@ def distance(instance1, instance2):
 
 
 def cdistance(x, y):
+    if x is None or y is None:
+        return float("inf")
     from math import sqrt
+
     def dot_product(x, y):
         return sum(a * b for a, b in zip(x, y))
 
@@ -98,7 +101,9 @@ def cdistance(x, y):
         return sqrt(dot_product(vector, vector))
 
     def similarity(x, y):
-        return (1 - (dot_product(x, y) / (magnitude(x) * magnitude(y) + .00000000001)))
+        return 1 - (dot_product(x, y) / (magnitude(x) * magnitude(y) + .00000000001))
+
+    return similarity(x, y)
 
 
 def meanInstance(name, instanceList):
