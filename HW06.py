@@ -180,6 +180,7 @@ def kmeans(instances, k, animation=False, initCentroids=None, similarity=0):
         paintClusters2D(canvas, clusters, centroids, "Initial centroids")
         time.sleep(delay)
     iteration = 0
+    withinssPrev = float("inf")
     while centroids != prevCentroids:
         iteration += 1
         clusters = assignAll(instances, centroids, similarity)
@@ -189,10 +190,14 @@ def kmeans(instances, k, animation=False, initCentroids=None, similarity=0):
         prevCentroids = centroids
         centroids = computeCentroids(clusters)
         withinss = computeWithinss(clusters, centroids, similarity)
+        if withinssPrev < withinss:
+            print("SSE value increased between iterations from " + str(withinssPrev) + " to " + str(withinss))
+        withinssPrev = withinss
         if animation:
             paintClusters2D(canvas, clusters, centroids,
                             "Update %d, withinss %.1f" % (iteration, withinss))
             time.sleep(delay)
+    print("Number of iterations: " + str(iteration))
     result["clusters"] = clusters
     result["centroids"] = centroids
     result["withinss"] = withinss

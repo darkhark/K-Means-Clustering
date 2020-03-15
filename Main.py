@@ -1,7 +1,7 @@
 import HW06 as hw
 import pandas as pd
 from sklearn import datasets, preprocessing
-from statistics import mode
+from statistics import mode, StatisticsError
 
 
 def printSSE(i):
@@ -49,9 +49,14 @@ def getModeCount(cluster):
     labels = []
     for centroid in cluster:
         labels.append(centroid[0])
-    return labels.count(mode(labels))
+    listMode = -1
+    try:
+        listMode = mode(labels)
+    except StatisticsError:
+        print("Either list was empty or two modes exist. The accuracy will be wrong for this calculation")
+    return labels.count(listMode)
 
-"""
+
 # similarity: 0 = Euclidean, 1 = Cosine, 2 = Manhattan, 3 = Jaccard
 # Question 1.1
 data = hw.loadCSV('footballData.csv')
@@ -72,7 +77,7 @@ question(centroidPoints, data, 2, 2)
 print("Manhattan")
 centroidPoints = [[0, 3, 2], [0, 4, 8]]
 question(centroidPoints, data, 2, 2)
-"""
+
 print("\n----------------Part 2-------------------\n")
 print("\n----------------Question 2.1-------------\n")
 print("Only Cosine Normalized")
@@ -103,3 +108,14 @@ print("Euclidean")
 print(getAccuracy(normEucCluster["clusters"]))
 print("Jaccard")
 print(getAccuracy(normJacCluster["clusters"]))
+
+"""
+Questions 2.3 and 2.4 exist within HW06 through print statements.
+ 
+For 2.3, a print statement on line 200 was made once each SSE reaches its minimum value. The print 
+statement identifies how many iterations it took to reach that minimum value.
+
+For 2.4, a few changes were made, but mainly the if statement on lines 193 and 194.
+After running this script many times, there was never an instance where the SSE increase.
+I also never ran more then 14 iterations.
+"""
