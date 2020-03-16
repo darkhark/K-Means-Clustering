@@ -16,7 +16,7 @@ def getAdjustedIrisData():
 
 def getNormalizedAdjustedIrisData():
     iris = datasets.load_iris()
-    irisData = pd.DataFrame(preprocessing.normalize(iris.data), columns=iris.feature_names)
+    irisData = pd.DataFrame(preprocessing.normalize(iris.data, axis=0), columns=iris.feature_names)
     return adjustIrisData(irisData, iris)
 
 
@@ -97,15 +97,17 @@ print("Jaccard")
 normJacCluster = question(None, getNormalizedAdjustedIrisData(), 3, 3)
 
 print("\n----------------Question 2.2-------------\n")
+print("Non normalized")
 print("Euclidean")
 print(getAccuracy(nonNormalEucCluster["clusters"]))
-print("Cosine")
-print(getAccuracy(cosCluster["clusters"]))
 print("Jaccard")
 print(getAccuracy(nonNormalJacCluster["clusters"]))
 
+print("\nNormalized")
 print("Euclidean")
 print(getAccuracy(normEucCluster["clusters"]))
+print("Cosine")
+print(getAccuracy(cosCluster["clusters"]))
 print("Jaccard")
 print(getAccuracy(normJacCluster["clusters"]))
 
